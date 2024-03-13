@@ -3,15 +3,17 @@ import 'dart:convert';
 class ParkingSpaceModel {
   final int number;
   final String licensePlate;
+  final bool occupied;
 
-  final DateTime startTime;
-  final DateTime endTime;
+  final DateTime? startTime;
+  final DateTime? endTime;
 
   final String? comment;
 
   ParkingSpaceModel({
     required this.number,
     required this.licensePlate,
+    required this.occupied,
     required this.startTime,
     required this.endTime,
     this.comment,
@@ -20,6 +22,7 @@ class ParkingSpaceModel {
   ParkingSpaceModel copyWith({
     int? number,
     String? licensePlate,
+    bool? occupied,
     DateTime? startTime,
     DateTime? endTime,
     String? comment,
@@ -27,6 +30,7 @@ class ParkingSpaceModel {
     return ParkingSpaceModel(
       number: number ?? this.number,
       licensePlate: licensePlate ?? this.licensePlate,
+      occupied: occupied ?? this.occupied,
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
       comment: comment ?? this.comment,
@@ -37,8 +41,9 @@ class ParkingSpaceModel {
     return <String, dynamic>{
       'number': number,
       'licensePlate': licensePlate,
-      'startTime': startTime.millisecondsSinceEpoch,
-      'endTime': endTime.millisecondsSinceEpoch,
+      'occupied': occupied,
+      'startTime': startTime?.millisecondsSinceEpoch,
+      'endTime': endTime?.millisecondsSinceEpoch,
       'comment': comment,
     };
   }
@@ -47,6 +52,7 @@ class ParkingSpaceModel {
     return ParkingSpaceModel(
       number: map['number'] as int,
       licensePlate: map['licensePlate'] as String,
+      occupied: map['occupied'] as bool,
       startTime: DateTime.fromMillisecondsSinceEpoch(map['startTime'] as int),
       endTime: DateTime.fromMillisecondsSinceEpoch(map['endTime'] as int),
       comment: map['comment'] != null ? map['comment'] as String : null,
