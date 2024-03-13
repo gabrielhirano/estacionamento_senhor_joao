@@ -1,4 +1,4 @@
-package com.case.raro.teste.estacionamento_senhor_joao
+package com.raro.teste.estacionamento_senhor_joao
 
 import io.flutter.embedding.android.FlutterActivity
 
