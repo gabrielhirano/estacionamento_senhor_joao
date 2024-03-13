@@ -16,7 +16,7 @@ class AppPreferences implements IAppPreferences {
 
   @override
   Future get(String? key) async {
-    if (key != null) return [preferences.get(key)];
+    if (key != null) return [jsonDecode(preferences.get(key).toString())];
 
     var listObjects = preferences.getKeys();
     var listJson = [];
