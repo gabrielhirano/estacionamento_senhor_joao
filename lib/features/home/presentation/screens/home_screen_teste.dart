@@ -1,16 +1,15 @@
 import 'package:parking_lot_joao/common/theme/theme_global.dart';
 import 'package:parking_lot_joao/common/utils/app_navigator.dart';
-import 'package:parking_lot_joao/features/home/presentation/screens/home_screen_teste.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreenTeste extends StatefulWidget {
+  const HomeScreenTeste({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  State<HomeScreenTeste> createState() => _HomeScreenTesteState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeScreenTesteState extends State<HomeScreenTeste> {
   late AppNavigator _appNavigator;
 
   @override
@@ -25,9 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        color: Colors.blue,
+        color: Colors.black,
         child: InkWell(
-          onTap: () => _appNavigator.navigate(const HomeScreenTeste()),
+          onTap: () => _appNavigator.popNavigate(),
           child: Center(
             child: Container(
               width: 100,
