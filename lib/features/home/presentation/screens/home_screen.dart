@@ -10,7 +10,7 @@ import 'package:parking_lot_joao/common/widget/grid_widget.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
-import 'package:parking_lot_joao/common/widget/loading/skeleton_grid_widget.dart';
+import 'package:parking_lot_joao/common/widget/loading/skeleton_list_widget.dart';
 import 'package:parking_lot_joao/features/home/presentation/bloc/home_bloc.dart';
 import 'package:parking_lot_joao/features/parking_space/presentation/widgets/card_parking_space_widget.dart';
 
@@ -38,7 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: AppText(
-          text: 'Olá Sr. João',
+          text: 'Estacionamento',
           textStyle: AppTextStyle.paragraphLargeBold,
           textColor: appColors.colorBrandPrimaryBlue,
         ),
@@ -61,7 +61,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 bloc: _homeBloc,
                 builder: (context, state) => switch (state.status) {
                   HomeStatus.idle => SizedBox.fromSize(),
-                  HomeStatus.loading => _loadingStateGrid(),
+                  HomeStatus.loading => const SkeletonListWidget(
+                      amount: 10,
+                      height: 80,
+                      radius: 4,
+                      margin: EdgeInsets.only(bottom: 10),
+                    ),
                   HomeStatus.success => _sucessStateGrid(state),
                   HomeStatus.error => SizedBox.fromSize(),
                 },
@@ -73,43 +78,18 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _loadingStateGrid() {
-    return SkeletonGridWidget(
-      amount: 21,
-      radius: 8,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: AspectRatioUtil.calculateAspectRatio(
-          context,
-          crossAxisSpacing: 14,
-          crossAxisCount: 3,
-          height: 160,
-        ),
-        crossAxisSpacing: 14,
-        mainAxisSpacing: 14,
-      ),
-    );
-  }
-
   Widget _sucessStateGrid(HomeState state) {
-    return GridWiget(
-      itemCount: state.parkingSpaces.length,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        childAspectRatio: AspectRatioUtil.calculateAspectRatio(
-          context,
-          crossAxisSpacing: 14,
-          crossAxisCount: 3,
-          height: 160,
-        ),
-        crossAxisSpacing: 14,
-        mainAxisSpacing: 14,
-      ),
-      itemBuilder: (_, index) {
-        final parkingSpace = state.parkingSpaces[index];
+    return ListView(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      children: List.generate(
+        state.parkingSpaces.length,
+        (index) {
+          final parkingSpace = state.parkingSpaces[index];
 
-        return CardParkingSpaceWidget(parkingSpace: parkingSpace);
-      },
+          return CardParkingSpaceWidget(parkingSpace: parkingSpace);
+        },
+      ).toList(),
     );
   }
 }

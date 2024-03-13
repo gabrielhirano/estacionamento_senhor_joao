@@ -16,47 +16,61 @@ class CardParkingSpaceWidget extends StatefulWidget {
 }
 
 class _CardParkingSpaceWidgetState extends State<CardParkingSpaceWidget> {
+  Color get colorOccupied =>
+      widget.parkingSpace.occupied ? appColors.redLight : appColors.greenLight;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(10),
+      height: 70,
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 10),
       decoration: AppShapes.decoration(
-        radius: RadiusSize.small,
-        color: widget.parkingSpace.occupied
-            ? appColors.redLight
-            : appColors.greenLight,
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+          radius: RadiusSize.small,
+          border: ShapesBorder(colorOccupied, borderWidth: 3)),
+      child: Row(
         children: [
-          const AppText(
-            text: 'Vaga',
-            textStyle: AppTextStyle.headerH4,
+          Container(
+            width: 100,
+            height: double.infinity,
+            color: colorOccupied,
+            child: Center(
+              child: AppText(
+                text: 'Vaga ${widget.parkingSpace.number}',
+                textStyle: AppTextStyle.headerH3,
+                textColor: appColors.greyDark,
+              ),
+            ),
           ),
-          AppText(
-            text: '${widget.parkingSpace.number}',
-            textStyle: AppTextStyle.headerH3,
-          ),
-          AppText(
-            text: widget.parkingSpace.licensePlate,
-            textStyle: AppTextStyle.headerH4,
-          ),
-          Row(
+          const SizedBox(width: 10),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const AppText(
-                text: 'Entrada:',
-                textStyle: AppTextStyle.paragraphSmallBold,
-              ),
-              const SizedBox(width: 5),
               AppText(
-                text:
-                    "${widget.parkingSpace.startTime?.hour}:${widget.parkingSpace.endTime?.minute}0",
-                textStyle: AppTextStyle.paragraphSmallBold,
+                text: 'Placa: ${widget.parkingSpace.licensePlate}',
+                textStyle: AppTextStyle.headerH4,
+                textColor: appColors.grey,
+              ),
+              Visibility(
+                visible: widget.parkingSpace.startTime != null,
+                child: AppText(
+                  text:
+                      'Entrada: ${widget.parkingSpace.startTime?.hour}:${widget.parkingSpace.endTime?.minute}0',
+                  textStyle: AppTextStyle.paragraphMediumBold,
+                  textColor: appColors.grey,
+                ),
               ),
             ],
           ),
+          const Spacer(),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(
+              Icons.edit,
+              color: appColors.colorBrandPrimaryBlue,
+            ),
+          )
         ],
       ),
     );
