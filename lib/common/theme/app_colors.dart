@@ -15,6 +15,11 @@ class AppColors {
   final orange = const Color(0xFFF45109);
   final transparent = Colors.transparent;
 
+  // Generics - Light
+  final greyLight = const Color(0xFFE4EBFD);
+  final greenLight = const Color(0xFFDEFCE0);
+  final redLight = const Color(0xFFFFE9E9);
+
   // Generics - Dark
   final greyDark = const Color(0xFF4A4A4A);
 }
