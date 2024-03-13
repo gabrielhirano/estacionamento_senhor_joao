@@ -1,29 +1,39 @@
-// import 'package:shared_preferences/shared_preferences.dart';
+import 'dart:convert';
 
-// abstract class IAppPreferences {
-//   Future get(String key);
-//   Future post(String key, String value);
-//   Future put(String key, String value);
-//   Future delete(String key);
-// }
+import 'package:shared_preferences/shared_preferences.dart';
 
-// class AppPreferences implements IAppPreferences {
-//   final SharedPreferences preferences;
+abstract class IAppPreferences {
+  Future get(String? key);
+  Future post(String key, String value);
+  Future put(String key, String value);
+  Future delete(String key);
+}
 
-//   AppPreferences(this.preferences);
+class AppPreferences implements IAppPreferences {
+  final SharedPreferences preferences;
 
-//   @override
-//   Future get(String key) async => preferences
-//       .getKeys()
-//       .map((objectName) => preferences.getString(objectName))
-//       .toList();
+  AppPreferences(this.preferences);
 
-//   @override
-//   Future post(String key, String value) => preferences.setString(key, value);
+  @override
+  Future get(String? key) async {
+    if (key != null) return [preferences.get(key)];
 
-//   @override
-//   Future put(String key, String value) => preferences.setString(key, value);
+    var listObjects = preferences.getKeys();
+    var listJson = [];
 
-//   @override
-//   Future delete(String key) => preferences.remove(key);
-// }
+    for (var objectName in listObjects) {
+      listJson.add(jsonDecode(preferences.getString(objectName)!));
+    }
+
+    return listJson;
+  }
+
+  @override
+  Future post(String key, String value) => preferences.setString(key, value);
+
+  @override
+  Future put(String key, String value) => preferences.setString(key, value);
+
+  @override
+  Future delete(String key) => preferences.remove(key);
+}
