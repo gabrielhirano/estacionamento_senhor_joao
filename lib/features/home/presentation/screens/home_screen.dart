@@ -1,7 +1,18 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
+import 'package:parking_lot_joao/common/config/dependency_injection.dart';
+import 'package:parking_lot_joao/common/layout/components/app_text.dart';
+import 'package:parking_lot_joao/common/layout/foundation/app_shapes.dart';
 import 'package:parking_lot_joao/common/theme/theme_global.dart';
-import 'package:parking_lot_joao/common/utils/app_navigator.dart';
-import 'package:parking_lot_joao/features/home/presentation/screens/home_screen_teste.dart';
+import 'package:parking_lot_joao/common/util/app_navigator.dart';
+import 'package:parking_lot_joao/common/util/aspect_ratio_util.dart';
+import 'package:parking_lot_joao/common/widget/grid_widget.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:flutter/material.dart';
+import 'package:parking_lot_joao/common/widget/loading/skeleton_grid_widget.dart';
+import 'package:parking_lot_joao/features/home/presentation/bloc/home_bloc.dart';
+import 'package:parking_lot_joao/features/parking_space/presentation/widgets/card_parking_space_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,32 +22,94 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  HomeBloc _homeBloc = getIt<HomeBloc>();
   late AppNavigator _appNavigator;
 
   @override
   void initState() {
     _appNavigator = AppNavigator(context);
+    _homeBloc.add(GetParkingSpacesEvent());
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: Colors.blue,
-        child: InkWell(
-          onTap: () => _appNavigator.navigate(const HomeScreenTeste()),
-          child: Center(
-            child: Container(
-              width: 100,
-              height: 100,
-              color: appColors.red,
-            ),
+      appBar: AppBar(
+        title: AppText(
+          text: 'Olá Sr. João',
+          textStyle: AppTextStyle.paragraphLargeBold,
+          textColor: appColors.colorBrandPrimaryBlue,
+        ),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                width: double.infinity,
+                height: 100,
+                decoration: AppShapes.decoration(
+                  radius: RadiusSize.small,
+                  color: Colors.blue,
+                ),
+              ),
+              const SizedBox(height: 20),
+              BlocBuilder<HomeBloc, HomeState>(
+                bloc: _homeBloc,
+                builder: (context, state) => switch (state.status) {
+                  HomeStatus.idle => SizedBox.fromSize(),
+                  HomeStatus.loading => _loadingStateGrid(),
+                  HomeStatus.success => _sucessStateGrid(state),
+                  HomeStatus.error => SizedBox.fromSize(),
+                },
+              ),
+            ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _loadingStateGrid() {
+    return SkeletonGridWidget(
+      amount: 21,
+      radius: 8,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        childAspectRatio: AspectRatioUtil.calculateAspectRatio(
+          context,
+          crossAxisSpacing: 14,
+          crossAxisCount: 3,
+          height: 160,
+        ),
+        crossAxisSpacing: 14,
+        mainAxisSpacing: 14,
+      ),
+    );
+  }
+
+  Widget _sucessStateGrid(HomeState state) {
+    return GridWiget(
+      itemCount: state.parkingSpaces.length,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: 3,
+        childAspectRatio: AspectRatioUtil.calculateAspectRatio(
+          context,
+          crossAxisSpacing: 14,
+          crossAxisCount: 3,
+          height: 160,
+        ),
+        crossAxisSpacing: 14,
+        mainAxisSpacing: 14,
+      ),
+      itemBuilder: (_, index) {
+        final parkingSpace = state.parkingSpaces[index];
+
+        return CardParkingSpaceWidget(parkingSpace: parkingSpace);
+      },
     );
   }
 }

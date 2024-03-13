@@ -1,5 +1,5 @@
 import 'package:parking_lot_joao/common/theme/theme_global.dart';
-import 'package:parking_lot_joao/common/utils/app_navigator.dart';
+import 'package:parking_lot_joao/common/util/app_navigator.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreenTeste extends StatefulWidget {

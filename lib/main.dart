@@ -1,5 +1,6 @@
 import 'package:parking_lot_joao/common/config/dependency_injection.dart';
-import 'package:parking_lot_joao/splash_screen.dart';
+import 'package:parking_lot_joao/features/parking_space/data/data_source/parking_space_remote_data_souce.dart';
+import 'package:parking_lot_joao/features/splash/presentation/screens/splash_screen.dart';
 
 import 'package:parking_lot_joao/common/config/parking_app.dart';
 
