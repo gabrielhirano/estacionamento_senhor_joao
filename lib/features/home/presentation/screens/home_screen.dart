@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:parking_lot_joao/common/config/dependency_injection.dart';
 import 'package:parking_lot_joao/common/layout/components/app_text.dart';
 import 'package:parking_lot_joao/common/layout/foundation/app_shapes.dart';
@@ -10,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:parking_lot_joao/common/widget/loading/skeleton_grid_widget.dart';
 import 'package:parking_lot_joao/features/home/presentation/bloc/home_bloc.dart';
+import 'package:parking_lot_joao/features/parking_space/presentation/widgets/card_parking_space_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -79,8 +82,8 @@ class _HomeScreenState extends State<HomeScreen> {
         childAspectRatio: AspectRatioUtil.calculateAspectRatio(
           context,
           crossAxisSpacing: 14,
-          crossAxisCount: 2,
-          height: 180,
+          crossAxisCount: 3,
+          height: 160,
         ),
         crossAxisSpacing: 14,
         mainAxisSpacing: 14,
@@ -96,31 +99,17 @@ class _HomeScreenState extends State<HomeScreen> {
         childAspectRatio: AspectRatioUtil.calculateAspectRatio(
           context,
           crossAxisSpacing: 14,
-          crossAxisCount: 2,
-          height: 180,
+          crossAxisCount: 3,
+          height: 160,
         ),
         crossAxisSpacing: 14,
         mainAxisSpacing: 14,
       ),
-      itemBuilder: (_, index) => Container(
-        decoration: AppShapes.decoration(
-          radius: RadiusSize.small,
-          color: appColors.redLight,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const AppText(
-              text: 'Vaga',
-              textStyle: AppTextStyle.headerH4,
-            ),
-            AppText(
-              text: '${state.parkingSpaces[index].number}',
-              textStyle: AppTextStyle.headerH3,
-            ),
-          ],
-        ),
-      ),
+      itemBuilder: (_, index) {
+        final parkingSpace = state.parkingSpaces[index];
+
+        return CardParkingSpaceWidget(parkingSpace: parkingSpace);
+      },
     );
   }
 }

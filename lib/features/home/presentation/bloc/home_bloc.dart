@@ -18,11 +18,11 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     Emitter<HomeState> emit,
   ) async {
     emit(state.copyWith(status: HomeStatus.loading));
-
+    await Future.delayed(const Duration(seconds: 2));
     await _getParkingSpacesUseCase()
-        .then((sucess) =>
-            state.copyWith(status: HomeStatus.success, parkingSpaces: sucess))
-        .catchError(
-            (error) => state.copyWith(status: HomeStatus.error, error: error));
+        .then((sucess) => emit(
+            state.copyWith(status: HomeStatus.success, parkingSpaces: sucess)))
+        .catchError((error) =>
+            emit(state.copyWith(status: HomeStatus.error, error: error)));
   }
 }
