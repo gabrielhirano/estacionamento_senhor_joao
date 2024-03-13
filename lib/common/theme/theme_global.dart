@@ -1,4 +1,4 @@
-import 'package:estacionamento_senhor_joao/common/config/dependency_injection.dart';
+import 'package:parking_lot_joao/common/config/dependency_injection.dart';
 
 import 'app_colors.dart';
 

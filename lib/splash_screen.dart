@@ -1,4 +1,4 @@
-import 'package:estacionamento_senhor_joao/common/theme/theme_global.dart';
+import 'package:parking_lot_joao/common/theme/theme_global.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {

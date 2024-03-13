@@ -1,6 +1,6 @@
-import 'package:estacionamento_senhor_joao/common/config/dependency_injection.dart';
-import 'package:estacionamento_senhor_joao/features/home/presentation/screens/home_screen.dart';
-import 'package:estacionamento_senhor_joao/splash_screen.dart';
+import 'package:parking_lot_joao/common/config/dependency_injection.dart';
+import 'package:parking_lot_joao/features/home/presentation/screens/home_screen.dart';
+import 'package:parking_lot_joao/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
