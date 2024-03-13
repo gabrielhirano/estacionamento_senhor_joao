@@ -17,5 +17,4 @@ class AppColors {
 
   // Generics - Dark
   final greyDark = const Color(0xFF4A4A4A);
-  final blueGreyDark = const Color(0xFF617185);
 }
