@@ -17,6 +17,7 @@ class _HistoryPreviewWidgetState extends State<HistoryPreviewWidget> {
   Widget build(BuildContext context) {
     Future(() =>
         _scrollController.jumpTo(_scrollController.position.maxScrollExtent));
+        
     return Container(
       width: double.infinity,
       height: 100,

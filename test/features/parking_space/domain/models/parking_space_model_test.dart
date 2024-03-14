@@ -6,7 +6,6 @@ void main() {
     test('ParkingSpaceModel should be instantiated correctly', () {
       final parkingSpace = ParkingSpaceModel(
         number: 1,
-        licensePlate: 'ABC1234',
         occupied: true,
         startTime: DateTime(2024, 3, 13, 10, 0),
         endTime: DateTime(2024, 3, 13, 12, 0),
@@ -14,7 +13,7 @@ void main() {
       );
 
       expect(parkingSpace.number, 1);
-      expect(parkingSpace.licensePlate, 'ABC1234');
+
       expect(parkingSpace.occupied, true);
       expect(parkingSpace.startTime, DateTime(2024, 3, 13, 10, 0));
       expect(parkingSpace.endTime, DateTime(2024, 3, 13, 12, 0));
@@ -25,7 +24,6 @@ void main() {
         () {
       final parkingSpace = ParkingSpaceModel(
         number: 1,
-        licensePlate: 'ABC1234',
         occupied: true,
         startTime: null,
         endTime: null,
@@ -40,7 +38,6 @@ void main() {
     test('ParkingSpaceModel toJson() and fromJson() should work correctly', () {
       final parkingSpace = ParkingSpaceModel(
         number: 1,
-        licensePlate: 'ABC1234',
         occupied: true,
         startTime: DateTime(2024, 3, 13, 10, 0),
         endTime: DateTime(2024, 3, 13, 12, 0),
@@ -51,7 +48,6 @@ void main() {
       final decodedParkingSpace = ParkingSpaceModel.fromJson(jsonString);
 
       expect(decodedParkingSpace.number, parkingSpace.number);
-      expect(decodedParkingSpace.licensePlate, parkingSpace.licensePlate);
       expect(decodedParkingSpace.occupied, parkingSpace.occupied);
       expect(decodedParkingSpace.startTime, parkingSpace.startTime);
       expect(decodedParkingSpace.endTime, parkingSpace.endTime);
@@ -63,7 +59,6 @@ void main() {
         () {
       final parkingSpace = ParkingSpaceModel(
         number: 1,
-        licensePlate: 'ABC1234',
         occupied: true,
         startTime: DateTime(2024, 3, 13, 10, 0),
         endTime: DateTime(2024, 3, 13, 12, 0),
@@ -77,7 +72,6 @@ void main() {
       );
 
       expect(updatedParkingSpace.number, 2);
-      expect(updatedParkingSpace.licensePlate, parkingSpace.licensePlate);
       expect(updatedParkingSpace.occupied, false);
       expect(updatedParkingSpace.startTime, DateTime(2024, 3, 13, 11, 0));
       expect(updatedParkingSpace.endTime, parkingSpace.endTime);

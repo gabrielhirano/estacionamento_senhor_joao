@@ -21,7 +21,6 @@ void main() {
     test('sucesso cadastro de vaga', () async {
       final parkingSpace1 = ParkingSpaceModel(
         number: 1,
-        licensePlate: 'ABC1234',
         occupied: false,
         startTime: DateTime(2024, 3, 12, 11, 0),
         endTime: DateTime(2024, 3, 12, 12, 0),
@@ -37,7 +36,6 @@ void main() {
       // primeiro limpar o que ja tenho na memoria
       final parkingSpace1 = ParkingSpaceModel(
         number: 1,
-        licensePlate: 'ABC1234',
         occupied: false,
         startTime: DateTime(2024, 3, 12, 11, 0),
         endTime: DateTime(2024, 3, 12, 12, 0),
@@ -55,7 +53,6 @@ void main() {
       // primeiro limpar o que ja tenho na memoria
       final parkingSpace1 = ParkingSpaceModel(
         number: 1,
-        licensePlate: 'ABC1234',
         occupied: false,
         startTime: DateTime(2024, 3, 12, 11, 0),
         endTime: DateTime(2024, 3, 12, 12, 0),
@@ -63,7 +60,6 @@ void main() {
 
       final parkingSpace2 = ParkingSpaceModel(
         number: 2,
-        licensePlate: 'DEF1234',
         occupied: false,
         startTime: DateTime(2024, 3, 12, 11, 0),
         endTime: DateTime(2024, 3, 12, 12, 0),
@@ -71,7 +67,6 @@ void main() {
 
       final parkingSpace3 = ParkingSpaceModel(
         number: 3,
-        licensePlate: 'GHI1234',
         occupied: false,
         startTime: DateTime(2024, 3, 12, 11, 0),
         endTime: DateTime(2024, 3, 12, 12, 0),

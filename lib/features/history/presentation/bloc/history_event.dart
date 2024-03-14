@@ -5,7 +5,7 @@ abstract class HistoryEvent {}
 class GetHistoryEvent extends HistoryEvent {}
 
 class RecordHistoryInformationEvent extends HistoryEvent {
-  final String information;
+  final ParkingSpaceModel parkingSpace;
 
-  RecordHistoryInformationEvent(this.information);
+  RecordHistoryInformationEvent(this.parkingSpace);
 }

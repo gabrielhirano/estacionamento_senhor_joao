@@ -12,11 +12,10 @@ import 'package:parking_lot_joao/common/widget/loading/skeleton_grid_widget.dart
 import 'package:parking_lot_joao/common/widget/loading/skeleton_widget.dart';
 import 'package:parking_lot_joao/features/history/presentation/bloc/history_bloc.dart';
 import 'package:parking_lot_joao/features/history/presentation/widgets/history_preview_widget.dart';
-import 'package:parking_lot_joao/features/history/util/history_formatter.dart';
+
 import 'package:parking_lot_joao/features/home/presentation/bloc/home_bloc.dart';
 import 'package:parking_lot_joao/features/parking_space/domain/models/parking_space_model.dart';
 import 'package:parking_lot_joao/features/parking_space/presentation/widgets/card_parking_space_widget.dart';
-import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -29,12 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
   final _homeBloc = getIt<HomeBloc>();
   final _historyBloc = getIt<HistoryBloc>();
 
-  late AppNavigator _appNavigator;
-
   @override
   void initState() {
-    _appNavigator = AppNavigator(context);
-
     _homeBloc.add(GetParkingSpacesEvent());
     _historyBloc.add(GetHistoryEvent());
 
@@ -133,20 +128,18 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _homeBloc.add(SetCheckInEvent(parkingSpace: parkingSpaceCheckIn));
     _homeBloc.add(GetParkingSpacesEvent());
+
+    _historyBloc.add(RecordHistoryInformationEvent(parkingSpaceCheckIn));
   }
 
   void _onCheckOut(ParkingSpaceModel parkingSpace) {
     final parkingSpaceCheckOut = parkingSpace.copyWith(endTime: DateTime.now());
 
     _homeBloc.add(SetCheckOutEvent(parkingSpace: parkingSpaceCheckOut));
-    // adicionar ao historico
-    _historyBloc.add(RecordHistoryInformationEvent('${DateTime.now()}'));
-    _historyBloc.add(GetHistoryEvent());
-
     _homeBloc.add(ClearParkingSpaceEvent(
-      ParkingSpaceModel.empty(number: parkingSpace.number),
-    ));
-
+        ParkingSpaceModel.empty(number: parkingSpace.number)));
     _homeBloc.add(GetParkingSpacesEvent());
+
+    _historyBloc.add(RecordHistoryInformationEvent(parkingSpaceCheckOut));
   }
 }
