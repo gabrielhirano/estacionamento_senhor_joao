@@ -64,7 +64,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     ClearParkingSpaceEvent event,
     Emitter<HomeState> emit,
   ) async {
-    await _setCheckOutUseCase(event.parkingSpace)
+    await _clearParkingSpaceUseCase(event.parkingSpace)
         .then((sucess) => emit(state.copyWith(status: HomeStatus.success)))
         .catchError((error) =>
             emit(state.copyWith(status: HomeStatus.error, error: error)));

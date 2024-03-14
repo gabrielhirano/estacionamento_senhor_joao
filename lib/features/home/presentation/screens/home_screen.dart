@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/widgets.dart';
 import 'package:parking_lot_joao/common/config/dependency_injection.dart';
 import 'package:parking_lot_joao/common/layout/components/app_text.dart';
-import 'package:parking_lot_joao/common/layout/foundation/app_shapes.dart';
+
 import 'package:parking_lot_joao/common/theme/theme_global.dart';
 import 'package:parking_lot_joao/common/util/app_navigator.dart';
 import 'package:parking_lot_joao/common/util/aspect_ratio_util.dart';
@@ -11,9 +9,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:flutter/material.dart';
 import 'package:parking_lot_joao/common/widget/loading/skeleton_grid_widget.dart';
+import 'package:parking_lot_joao/common/widget/loading/skeleton_widget.dart';
+import 'package:parking_lot_joao/features/history/presentation/bloc/history_bloc.dart';
+import 'package:parking_lot_joao/features/history/presentation/widgets/history_preview_widget.dart';
+import 'package:parking_lot_joao/features/history/util/history_formatter.dart';
 import 'package:parking_lot_joao/features/home/presentation/bloc/home_bloc.dart';
 import 'package:parking_lot_joao/features/parking_space/domain/models/parking_space_model.dart';
 import 'package:parking_lot_joao/features/parking_space/presentation/widgets/card_parking_space_widget.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,13 +26,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  HomeBloc _homeBloc = getIt<HomeBloc>();
+  final _homeBloc = getIt<HomeBloc>();
+  final _historyBloc = getIt<HistoryBloc>();
+
   late AppNavigator _appNavigator;
 
   @override
   void initState() {
     _appNavigator = AppNavigator(context);
+
     _homeBloc.add(GetParkingSpacesEvent());
+    _historyBloc.add(GetHistoryEvent());
 
     super.initState();
   }
@@ -49,13 +56,15 @@ class _HomeScreenState extends State<HomeScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                width: double.infinity,
-                height: 100,
-                decoration: AppShapes.decoration(
-                  radius: RadiusSize.small,
-                  color: Colors.blue,
-                ),
+              BlocBuilder<HistoryBloc, HistoryState>(
+                bloc: _historyBloc,
+                builder: (context, state) => switch (state.status) {
+                  HistoryStatus.loading =>
+                    const SkeletonWidget(height: 100, radius: 8),
+                  HistoryStatus.success =>
+                    HistoryPreviewWidget(history: state.history),
+                  HistoryStatus.error => SizedBox.fromSize(),
+                },
               ),
               const SizedBox(height: 20),
               BlocBuilder<HomeBloc, HomeState>(
@@ -93,7 +102,6 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _sucessStateGrid(HomeState state) {
-    print(state);
     return GridWiget(
       itemCount: state.parkingSpaces.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -132,6 +140,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
     _homeBloc.add(SetCheckOutEvent(parkingSpace: parkingSpaceCheckOut));
     // adicionar ao historico
+    _historyBloc.add(RecordHistoryInformationEvent('${DateTime.now()}'));
+    _historyBloc.add(GetHistoryEvent());
+
     _homeBloc.add(ClearParkingSpaceEvent(
       ParkingSpaceModel.empty(number: parkingSpace.number),
     ));
