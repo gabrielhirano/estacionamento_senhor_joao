@@ -16,13 +16,14 @@ class HistoryLocalDataSourceImpl extends HistoryLocalDataSource {
   Future recordHistoryInformation(String information) async {
     List<String> history = await getHistory();
     history.add(information);
-    return _preferences.setList(historyKey, history);
+    var teste = await _preferences.setList(historyKey, history);
+
+    return teste;
   }
 
   @override
   Future<List<String>> getHistory() async {
     var teste = await _preferences.getList(historyKey);
-    print(teste);
     return teste;
   }
 }

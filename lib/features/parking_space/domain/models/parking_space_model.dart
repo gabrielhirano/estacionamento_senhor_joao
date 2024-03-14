@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class ParkingSpaceModel {
   final int number;
-  final String? licensePlate;
+
   final bool occupied;
 
   final DateTime? startTime;
@@ -12,7 +12,6 @@ class ParkingSpaceModel {
 
   ParkingSpaceModel({
     required this.number,
-    this.licensePlate,
     this.occupied = false,
     this.startTime,
     this.endTime,
@@ -24,7 +23,6 @@ class ParkingSpaceModel {
 
   ParkingSpaceModel copyWith({
     int? number,
-    String? licensePlate,
     bool? occupied,
     DateTime? startTime,
     DateTime? endTime,
@@ -32,7 +30,6 @@ class ParkingSpaceModel {
   }) {
     return ParkingSpaceModel(
       number: number ?? this.number,
-      licensePlate: licensePlate ?? this.licensePlate,
       occupied: occupied ?? this.occupied,
       startTime: startTime ?? this.startTime,
       endTime: endTime ?? this.endTime,
@@ -43,7 +40,6 @@ class ParkingSpaceModel {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'number': number,
-      'licensePlate': licensePlate,
       'occupied': occupied,
       'startTime': startTime?.millisecondsSinceEpoch,
       'endTime': endTime?.millisecondsSinceEpoch,
@@ -57,8 +53,6 @@ class ParkingSpaceModel {
   factory ParkingSpaceModel.fromMap(Map<String, dynamic> map) {
     return ParkingSpaceModel(
       number: map['number'] as int,
-      licensePlate:
-          map['licensePlate'] != null ? map['licensePlate'] as String : null,
       occupied: map['occupied'] as bool,
       startTime: map['startTime'] != null
           ? DateTime.fromMillisecondsSinceEpoch(map['startTime'] as int)

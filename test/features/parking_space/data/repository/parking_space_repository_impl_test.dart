@@ -23,7 +23,6 @@ void main() {
     repository = ParkingSpaceRepositoryImpl(parkingSpaceLocalDataSource);
     model = ParkingSpaceModel(
       number: 1,
-      licensePlate: 'ABC1234',
       occupied: false,
       startTime: DateTime(2024, 3, 12, 11, 0),
       endTime: DateTime(2024, 3, 12, 12, 0),
