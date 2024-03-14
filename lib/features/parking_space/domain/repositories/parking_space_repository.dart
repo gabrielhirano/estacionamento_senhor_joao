@@ -2,4 +2,7 @@ import 'package:parking_lot_joao/features/parking_space/domain/models/parking_sp
 
 abstract class ParkingSpaceRepository {
   Future<List<ParkingSpaceModel>> getParkingSpaceModel({String? spaceNumber});
+  Future setCheckIn(ParkingSpaceModel parkingSpace);
+  Future setCheckOut(ParkingSpaceModel parkingSpace);
+  Future clearParkingSpace(ParkingSpaceModel parkingSpace);
 }

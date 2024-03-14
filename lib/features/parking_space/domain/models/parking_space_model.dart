@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class ParkingSpaceModel {
   final int number;
-  final String licensePlate;
+  final String? licensePlate;
   final bool occupied;
 
   final DateTime? startTime;
@@ -12,12 +12,15 @@ class ParkingSpaceModel {
 
   ParkingSpaceModel({
     required this.number,
-    required this.licensePlate,
-    required this.occupied,
-    required this.startTime,
-    required this.endTime,
+    this.licensePlate,
+    this.occupied = false,
+    this.startTime,
+    this.endTime,
     this.comment,
   });
+  bool get isOccupied => startTime != null && endTime == null;
+
+  bool get isFree => startTime == null && endTime == null;
 
   ParkingSpaceModel copyWith({
     int? number,
@@ -48,13 +51,21 @@ class ParkingSpaceModel {
     };
   }
 
+  factory ParkingSpaceModel.empty({required int number}) =>
+      ParkingSpaceModel(number: number);
+
   factory ParkingSpaceModel.fromMap(Map<String, dynamic> map) {
     return ParkingSpaceModel(
       number: map['number'] as int,
-      licensePlate: map['licensePlate'] as String,
+      licensePlate:
+          map['licensePlate'] != null ? map['licensePlate'] as String : null,
       occupied: map['occupied'] as bool,
-      startTime: DateTime.fromMillisecondsSinceEpoch(map['startTime'] as int),
-      endTime: DateTime.fromMillisecondsSinceEpoch(map['endTime'] as int),
+      startTime: map['startTime'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['startTime'] as int)
+          : null,
+      endTime: map['endTime'] != null
+          ? DateTime.fromMillisecondsSinceEpoch(map['endTime'] as int)
+          : null,
       comment: map['comment'] != null ? map['comment'] as String : null,
     );
   }
