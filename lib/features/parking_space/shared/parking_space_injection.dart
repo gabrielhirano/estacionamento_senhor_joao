@@ -4,7 +4,10 @@ import 'package:parking_lot_joao/features/parking_space/data/data_source/parking
 import 'package:parking_lot_joao/features/parking_space/data/repository/parking_space_repository_impl.dart';
 import 'package:parking_lot_joao/features/parking_space/domain/models/parking_space_model.dart';
 import 'package:parking_lot_joao/features/parking_space/domain/repositories/parking_space_repository.dart';
+import 'package:parking_lot_joao/features/parking_space/domain/use_cases/clear_parking_space_use_case.dart';
 import 'package:parking_lot_joao/features/parking_space/domain/use_cases/get_parking_spaces_use_case.dart';
+import 'package:parking_lot_joao/features/parking_space/domain/use_cases/set_check_in_use_case.dart';
+import 'package:parking_lot_joao/features/parking_space/domain/use_cases/set_check_out_use_case.dart';
 
 mixin ParkingSpaceInjection {
   static Future<void> inject(GetIt getIt) async {
@@ -14,6 +17,12 @@ mixin ParkingSpaceInjection {
     // Use Cases
     getIt.registerLazySingleton<GetParkingSpacesUseCase>(
         () => GetParkingSpacesUseCase(getIt()));
+    getIt.registerLazySingleton<SetCheckInUseCase>(
+        () => SetCheckInUseCase(getIt()));
+    getIt.registerLazySingleton<SetCheckOutUseCase>(
+        () => SetCheckOutUseCase(getIt()));
+    getIt.registerLazySingleton<ClearParkingSpaceUseCase>(
+        () => ClearParkingSpaceUseCase(getIt()));
 
     // Data
     getIt.registerLazySingleton<ParkingSpaceLocalDataSource>(
@@ -26,34 +35,27 @@ mixin ParkingSpaceInjection {
     final ParkingSpaceLocalDataSource parkingSpaceLocalDataSource =
         getIt<ParkingSpaceLocalDataSource>();
 
-    final parkingSpace1 = ParkingSpaceModel(
-      number: 1,
-      licensePlate: 'ABC1234',
-      occupied: false,
-      startTime: DateTime(2024, 3, 12, 11, 0),
-      endTime: DateTime(2024, 3, 12, 12, 0),
-    );
-
-    final parkingSpace2 = ParkingSpaceModel(
-      number: 2,
-      licensePlate: 'DEF1234',
-      occupied: true,
-      startTime: DateTime(2024, 3, 12, 11, 0),
-      endTime: DateTime(2024, 3, 12, 12, 0),
-    );
-
-    final parkingSpace3 = ParkingSpaceModel(
-      number: 3,
-      licensePlate: 'GHI1234',
-      occupied: true,
-      startTime: DateTime(2024, 3, 12, 11, 0),
-      endTime: DateTime(2024, 3, 12, 12, 0),
-    );
-
     await Future.wait([
-      parkingSpaceLocalDataSource.createParkingSpace(parkingSpace1),
-      parkingSpaceLocalDataSource.createParkingSpace(parkingSpace2),
-      parkingSpaceLocalDataSource.createParkingSpace(parkingSpace3)
+      parkingSpaceLocalDataSource
+          .createParkingSpace(ParkingSpaceModel(number: 1)),
+      parkingSpaceLocalDataSource
+          .createParkingSpace(ParkingSpaceModel(number: 2)),
+      parkingSpaceLocalDataSource
+          .createParkingSpace(ParkingSpaceModel(number: 3)),
+      parkingSpaceLocalDataSource
+          .createParkingSpace(ParkingSpaceModel(number: 4)),
+      parkingSpaceLocalDataSource
+          .createParkingSpace(ParkingSpaceModel(number: 5)),
+      parkingSpaceLocalDataSource
+          .createParkingSpace(ParkingSpaceModel(number: 6)),
+      parkingSpaceLocalDataSource
+          .createParkingSpace(ParkingSpaceModel(number: 7)),
+      parkingSpaceLocalDataSource
+          .createParkingSpace(ParkingSpaceModel(number: 8)),
+      parkingSpaceLocalDataSource
+          .createParkingSpace(ParkingSpaceModel(number: 9)),
+      parkingSpaceLocalDataSource
+          .createParkingSpace(ParkingSpaceModel(number: 10)),
     ]);
   }
 }

@@ -14,4 +14,19 @@ class ParkingSpaceRepositoryImpl implements ParkingSpaceRepository {
         .catchError((error) =>
             throw error); // tratar erro para suas abstrações caso seja necessario
   }
+
+  @override
+  Future setCheckIn(ParkingSpaceModel parkingSpace) {
+    return _parkingSpaceLocalDataSource.updateParkingSpace(parkingSpace);
+  }
+
+  @override
+  Future setCheckOut(ParkingSpaceModel parkingSpace) {
+    return _parkingSpaceLocalDataSource.updateParkingSpace(parkingSpace);
+  }
+
+  @override
+  Future clearParkingSpace(ParkingSpaceModel parkingSpace) {
+    return _parkingSpaceLocalDataSource.updateParkingSpace(parkingSpace);
+  }
 }
