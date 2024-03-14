@@ -31,5 +31,4 @@ Todos os dados são armazenados localmente no dispositivo do usuário. Os regist
 Foram realizados testes unitários para as classes data_source, repository e model. No entanto, os testes para os arquivos bloc ainda não foram concluídos devido a uma compreensão limitada sobre o assunto. Estou ciente das práticas de utilização de mocktail e bloc_test para este propósito. 
 Enquanto isso, algumas demandas urgentes surgiram, o que exigiu priorização dessas tarefas. Os testes dos widgets também ficarão pendentes, embora sejam relativamente simples, devido à pressão do tempo.
 
-## Observações
-Este aplicativo foi desenvolvido como uma demonstração simples de como usar o BLoC como gerenciador de estado e aplicar os princípios da Clean Architecture para criar um aplicativo escalável e de fácil manutenção. As tecnologias e abordagens utilizadas visam fornecer uma base sólida para o desenvolvimento de aplicativos móveis mais complexos no futuro.
+
