@@ -1,28 +1,32 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'home_bloc.dart';
 
-enum HomeStatus { idle, loading, success, error }
+enum HomeStatus { idle, loading, success, failure }
 
-class HomeState {
+class HomeState extends Equatable {
   final HomeStatus status;
   final List<ParkingSpaceModel> parkingSpaces;
-  final Exception? error;
+  final Failure? failure;
 
   HomeState({
     required this.status,
     required this.parkingSpaces,
-    this.error,
+    this.failure,
   });
 
   HomeState copyWith({
     HomeStatus? status,
     List<ParkingSpaceModel>? parkingSpaces,
-    Exception? error,
+    Failure? failure,
   }) {
     return HomeState(
       status: status ?? this.status,
       parkingSpaces: parkingSpaces ?? this.parkingSpaces,
-      error: error ?? this.error,
+      failure: failure ?? this.failure,
     );
   }
+
+  @override
+  List<Object?> get props => [status];
+
+  String get messageFailure => failure?.message ?? 'Nenhuma falha registrada!';
 }

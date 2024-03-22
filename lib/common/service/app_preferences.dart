@@ -18,7 +18,7 @@ class AppPreferences implements IAppPreferences {
 
   @override
   Future<List<String>> getList(String key) async =>
-      preferences.getStringList(key) ?? List<String>.empty();
+      preferences.getStringList(key) ?? List<String>.empty(growable: true);
 
   @override
   Future setList(String key, List<String> list) {

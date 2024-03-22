@@ -1,9 +1,8 @@
 import 'package:bloc/bloc.dart';
-import 'package:intl/intl.dart';
 
 import 'package:parking_lot_joao/features/history/domain/use_cases/get_history_use_case.dart';
 import 'package:parking_lot_joao/features/history/domain/use_cases/record_history_information_use_case.dart';
-import 'package:parking_lot_joao/features/parking_space/domain/models/parking_space_model.dart';
+import 'package:parking_lot_joao/features/parking_space/data/models/parking_space_model.dart';
 
 part 'history_event.dart';
 part 'history_state.dart';
@@ -39,19 +38,12 @@ class HistoryBloc extends Bloc<HistoryEvent, HistoryState> {
   ) async {
     emit(state.copyWith(status: HistoryStatus.loading));
 
-    final time = DateFormat('dd/MM/yyyy HH:mm').format(
-        event.parkingSpace.isOccupied
-            ? event.parkingSpace.startTime!
-            : event.parkingSpace.endTime!);
-
-    final String log =
-        '[$time]  ${event.parkingSpace.isOccupied ? 'Entrou na' : 'Saiu da'} vaga ${event.parkingSpace.number}';
-
-    await _historyInformationUseCase(log).then((sucess) {
+    await _historyInformationUseCase(event.parkingSpace.log).then((sucess) {
       emit(state.copyWith(status: HistoryStatus.success));
 
       add(GetHistoryEvent());
-    }).catchError((error) =>
-        emit(state.copyWith(status: HistoryStatus.error, error: error)));
+    }).catchError((error) {
+      emit(state.copyWith(status: HistoryStatus.error, error: error));
+    });
   }
 }

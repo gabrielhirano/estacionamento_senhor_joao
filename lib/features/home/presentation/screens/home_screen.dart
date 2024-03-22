@@ -14,7 +14,7 @@ import 'package:parking_lot_joao/features/history/presentation/bloc/history_bloc
 import 'package:parking_lot_joao/features/history/presentation/widgets/history_preview_widget.dart';
 
 import 'package:parking_lot_joao/features/home/presentation/bloc/home_bloc.dart';
-import 'package:parking_lot_joao/features/parking_space/domain/models/parking_space_model.dart';
+import 'package:parking_lot_joao/features/parking_space/data/models/parking_space_model.dart';
 import 'package:parking_lot_joao/features/parking_space/presentation/widgets/card_parking_space_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -64,11 +64,18 @@ class _HomeScreenState extends State<HomeScreen> {
               const SizedBox(height: 20),
               BlocBuilder<HomeBloc, HomeState>(
                 bloc: _homeBloc,
-                builder: (context, state) => switch (state.status) {
+                builder: (_, state) => switch (state.status) {
                   HomeStatus.idle => SizedBox.fromSize(),
                   HomeStatus.loading => _loadingStateGrid(),
                   HomeStatus.success => _sucessStateGrid(state),
-                  HomeStatus.error => SizedBox.fromSize(),
+                  HomeStatus.failure => Center(
+                      child: Center(
+                        child: AppText(
+                          text: state.messageFailure,
+                          textStyle: AppTextStyle.paragraphLargeBold,
+                        ),
+                      ),
+                    ),
                 },
               ),
             ],

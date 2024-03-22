@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:intl/intl.dart';
+
 class ParkingSpaceModel {
   final int number;
 
@@ -20,6 +22,18 @@ class ParkingSpaceModel {
   bool get isOccupied => startTime != null && endTime == null;
 
   bool get isFree => startTime == null && endTime == null;
+
+  String get log {
+    if (startTime != null && isOccupied) {
+      final time = DateFormat('dd/MM/yyyy HH:mm').format(startTime!);
+
+      return '[$time]  Entrou na vaga $number';
+    } else {
+      final time = DateFormat('dd/MM/yyyy HH:mm').format(endTime!);
+
+      return '[$time]  Saiu da vaga $number';
+    }
+  }
 
   ParkingSpaceModel copyWith({
     int? number,

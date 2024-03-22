@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:parking_lot_joao/common/layout/components/app_text.dart';
 import 'package:parking_lot_joao/common/layout/foundation/app_shapes.dart';
 import 'package:parking_lot_joao/common/theme/theme_global.dart';
-import 'package:parking_lot_joao/features/parking_space/domain/models/parking_space_model.dart';
+import 'package:parking_lot_joao/features/parking_space/data/models/parking_space_model.dart';
 
 class CardParkingSpaceWidget extends StatefulWidget {
   final ParkingSpaceModel parkingSpace;
@@ -67,14 +67,9 @@ class _CardParkingSpaceWidgetState extends State<CardParkingSpaceWidget> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // AppText(
-                      //   text: 'Placa: ${widget.parkingSpace.licensePlate}',
-                      //   textStyle: AppTextStyle.paragraphLargeBold,
-                      //   textColor: appColors.grey,
-                      // ),
                       AppText(
                         text:
-                            'Entrada: ${widget.parkingSpace.startTime?.hour}:${widget.parkingSpace.endTime?.minute}0',
+                            'Entrada: ${widget.parkingSpace.startTime?.hour}:${widget.parkingSpace.startTime?.minute}',
                         textStyle: AppTextStyle.paragraphLargeBold,
                         textColor: appColors.grey,
                       ),

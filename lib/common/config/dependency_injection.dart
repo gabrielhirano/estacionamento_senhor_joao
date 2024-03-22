@@ -1,3 +1,5 @@
+import 'package:dio/dio.dart';
+import 'package:parking_lot_joao/common/service/app_client.dart';
 import 'package:parking_lot_joao/common/service/app_preferences.dart';
 import 'package:parking_lot_joao/common/theme/app_colors.dart';
 import 'package:get_it/get_it.dart';
@@ -10,10 +12,19 @@ final getIt = GetIt.instance;
 
 mixin DependencyInjection {
   static Future<void> init() async {
-    getIt.registerLazySingleton<AppColors>(() => AppColors());
     final sharedPreferences = await SharedPreferences.getInstance();
+
     getIt.registerLazySingleton<AppPreferences>(
-        () => AppPreferences(sharedPreferences));
+      () => AppPreferences(sharedPreferences),
+    );
+
+    getIt.registerLazySingleton<AppColors>(
+      () => AppColors(),
+    );
+
+    getIt.registerLazySingleton<AppClient>(
+      () => AppClient(),
+    );
 
     Future.wait([
       ParkingSpaceInjection.inject(getIt),
